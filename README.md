@@ -3,7 +3,7 @@
 - Concepts: Websockets, long polling and fault tolerence
 - Great to: Handle reliable and concurrent real-time systems
 
-* Functional Requirements
+<!-- * Functional Requirements
 1. 1-1 chat
 2. Group chat
 3. Read receipt
@@ -46,4 +46,4 @@
 3. T_LastSeen => userId, timestamp
 4. T_UnseenMessages => messageId, sent_to_id, sent_from_id, content, media_url, timestamp
 5. T_Sessions => userId, sessionId
-
+ -->
