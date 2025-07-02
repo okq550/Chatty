@@ -7,6 +7,7 @@ import dotenv from "dotenv"
 import cookieParser from "cookie-parser"
 import cors from "cors"
 import { app, server } from "./lib/socket.js"
+import path from "path"
 
 import connectDB from "./lib/db.js"
 import authRoutes from "./routes/auth.routes.js"
@@ -34,13 +35,13 @@ app.get("/ping", (req, res) => {
   return res.send("success")
 })
 
-// Serve the frontend as static 
+// Serve the frontend as static
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  app.use(express.static(path.join(__dirname, "../frontend/dist")))
 
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
-  });
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"))
+  })
 }
 
 server.listen(PORT, () => {
