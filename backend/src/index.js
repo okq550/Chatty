@@ -7,8 +7,8 @@ import dotenv from "dotenv"
 import cookieParser from "cookie-parser"
 import cors from "cors"
 import { app, server } from "./lib/socket.js"
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from "path"
+import { fileURLToPath } from "url"
 
 import connectDB from "./lib/db.js"
 import authRoutes from "./routes/auth.routes.js"
@@ -37,14 +37,34 @@ app.get("/ping", (req, res) => {
 })
 
 // Serve the frontend as static
-if (process.env.NODE_ENV === "production") {
-  const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
-  const __dirname = path.dirname(__filename); // get the name of the directory
+// if (process.env.NODE_ENV === "production") {
+//   const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+//   const __dirname = path.dirname(__filename); // get the name of the directory
 
-  app.use(express.static(path.join(__dirname, "../frontend/dist")))
+//   console.log(path.join(__dirname, "../frontend/dist"));
+
+//   app.use(express.static(path.join(__dirname, "../frontend/dist")))
+
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"))
+//   })
+// }
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+const __dist = path.join(__dirname, "../../frontend", "dist")
+const __index = path.join(__dist, "index.html")
+
+console.log(`__filename: ${__filename}`)
+console.log(`__dirname: ${__dirname}`)
+console.log(`__dist: ${__dist}`)
+console.log(`__index: ${__index}`)
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(__dirname))
 
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"))
+    res.sendFile(__index)
   })
 }
 
