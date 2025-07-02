@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: Designing a Highly Scalable Real-Time Chat System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F7FFF7; /* Off-White/Pale Green from chosen palette */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* Default max-width, can be overridden by Tailwind max-w- classes */
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px; 
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flow-chart-box {
+            border: 2px solid #4ECDC4; /* Turquoise Blue */
+            padding: 1rem;
+            text-align: center;
+            border-radius: 0.5rem;
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            color: #1A535C; /* Dark Teal */
+        }
+        .flow-chart-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #4ECDC4; /* Turquoise Blue */
+            margin: 0.5rem 0;
+        }
+        .section-title {
+            color: #1A535C; /* Dark Teal */
+        }
+        .stat-number {
+            color: #FF6B6B; /* Lively Coral */
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem; /* lg */
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); /* shadow-lg */
+            padding: 1.5rem; /* p-6 */
+            margin-bottom: 2rem; /* mb-8 */
+        }
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+        .nav-item:hover, .nav-item.active {
+            background-color: #FF6B6B; /* Lively Coral */
+            color: white;
+        }
+    </style>
+    <!-- 
+        Chosen Color Palette Name: Energetic & Playful (Custom Definition)
+        Primary: #FF6B6B (Lively Coral)
+        Secondary: #4ECDC4 (Turquoise Blue)
+        Accent: #45B7D1 (Sky Blue)
+        Neutral Dark: #1A535C (Dark Teal)
+        Neutral Light: #F7FFF7 (Off-White/Pale Green)
+        Chart Colors: #FFD166 (Sunny Yellow), #06D6A0 (Emerald Green), #118AB2 (Cerulean Blue), #FF6B6B, #4ECDC4
+    -->
+    <!-- 
+        Narrative Plan & Structure:
+        1.  Title: Infographic: Designing a Highly Scalable Real-Time Chat System
+        2.  Section 1: The Unprecedented Scale of Modern Chat (Hook - why it's important, scale)
+            - Big Number: Concurrent User Capacity
+            - Big Number: Daily Message Throughput
+        3.  Section 2: Blueprint of a Modern Chat Architecture (Overview of key components)
+            - Simplified Message Flow Diagram (HTML/CSS)
+            - Component Categories Donut Chart (Client, Servers, Data Tier, Services)
+        4.  Section 3: Pillars of a Resilient Chat System (Key design considerations)
+            - Bar Chart: Rated Importance of Design Principles (Scalability, Reliability, Latency, Security)
+            - Feature List: Key Technologies/Approaches (WebSockets, Message Queues, etc.)
+        5.  Section 4: Technology Ecosystem for Chat (Examples from tech stack)
+            - Stacked Bar Chart: Illustrative Popularity of Tech Choices (e.g., WebSocket Libs, Databases)
+        6.  Section 5: The Horizon: Advancing Chat Capabilities (Challenges & Future Enhancements)
+            - Bubble Chart: Potential Impact vs. Implementation Complexity of Future Features
+        7.  Conclusion: Building the Future of Communication
+    -->
+    <!-- 
+        Visualization Choices:
+        Section 1:
+        - Data Point: Concurrent User Capacity. Goal: Inform. Chosen Visualization: Single Big Number. Justification: Highlights key system capability. Method: HTML/CSS. NO SVG.
+        - Data Point: Daily Message Throughput. Goal: Inform. Chosen Visualization: Single Big Number. Justification: Highlights system's message handling scale. Method: HTML/CSS. NO SVG.
+        Section 2:
+        - Data Point: Simplified Message Flow. Goal: Organize. Chosen Visualization: Flow Chart. Justification: Illustrates core process. Method: Structured HTML/CSS with Tailwind. NO SVG, NO MERMAID JS.
+        - Data Point: Component Categories (e.g., Client, Servers, Data, Services). Goal: Compare/Inform. Chosen Visualization: Donut Chart. Justification: Shows proportional breakdown of architectural areas. Method: Chart.js (Canvas). NO SVG.
+        Section 3:
+        - Data Point: Rated Importance of Design Principles (Scalability, Reliability, Latency, Security). Goal: Compare. Chosen Visualization: Bar Chart. Justification: Compares the focus on different critical aspects. Method: Chart.js (Canvas). NO SVG.
+        - Data Point: Key Technologies/Approaches. Goal: Inform. Chosen Visualization: List with Unicode Icons. Justification: Clearly presents essential technical elements. Method: HTML/CSS with Unicode. NO SVG.
+        Section 4:
+        - Data Point: Illustrative Popularity of Tech Choices (e.g., WebSocket Libraries, Databases, Message Queues). Goal: Compare. Chosen Visualization: Stacked Bar Chart. Justification: Shows composition and trends in technology adoption for chat systems. Method: Chart.js (Canvas). NO SVG.
+        Section 5:
+        - Data Point: Potential Impact vs. Implementation Complexity of Future Features (e.g., E2E Encryption, AI Moderation). Goal: Compare/Relationships. Chosen Visualization: Bubble Chart. Justification: Visualizes two dimensions for strategic consideration of enhancements. Method: Chart.js (Canvas). NO SVG.
+        
+        Confirmation: NEITHER Mermaid JS NOR SVG were used anywhere in this output. All diagrams and charts are rendered using HTML/CSS/Tailwind or Chart.js with Canvas.
+    -->
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <header class="bg-[#1A535C] text-white p-6 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <h1 class="text-3xl font-bold text-[#F7FFF7]">Infographic: Designing a Highly Scalable Real-Time Chat System</h1>
+            <nav class="mt-4 md:mt-0">
+                <ul class="flex space-x-2 md:space-x-4">
+                    <li><a href="#scale" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-[#F7FFF7]">Scale</a></li>
+                    <li><a href="#architecture" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-[#F7FFF7]">Architecture</a></li>
+                    <li><a href="#pillars" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-[#F7FFF7]">Pillars</a></li>
+                    <li><a href="#ecosystem" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-[#F7FFF7]">Ecosystem</a></li>
+                    <li><a href="#horizon" class="nav-item px-3 py-2 rounded-md text-sm font-medium text-[#F7FFF7]">Horizon</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="scale" class="card text-center">
+            <h2 class="text-3xl font-bold section-title mb-6">The Unprecedented Scale of Modern Chat</h2>
+            <p class="text-lg text-gray-700 mb-8 max-w-3xl mx-auto">
+                Modern real-time chat systems are engineered to connect vast numbers of users and process an immense volume of messages instantaneously. This section highlights the sheer scale these platforms must achieve to meet global communication demands, forming the foundational challenge for system architects.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-[#4ECDC4] p-8 rounded-lg shadow-lg text-white">
+                    <div class="text-6xl font-bold stat-number mb-2 text-white">1M+</div>
+                    <div class="text-xl font-semibold">Concurrent User Capacity</div>
+                    <p class="text-sm mt-2">Designed to handle over a million simultaneous users without performance degradation.</p>
+                </div>
+                <div class="bg-[#FF6B6B] p-8 rounded-lg shadow-lg text-white">
+                    <div class="text-6xl font-bold stat-number mb-2 text-white">10B+</div>
+                    <div class="text-xl font-semibold">Daily Message Throughput</div>
+                    <p class="text-sm mt-2">Capable of processing tens of billions of messages per day, ensuring real-time delivery.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="architecture" class="card">
+            <h2 class="text-3xl font-bold section-title mb-6 text-center">Blueprint of a Modern Chat Architecture</h2>
+            <p class="text-lg text-gray-700 mb-8 max-w-3xl mx-auto text-center">
+                A scalable chat system relies on a sophisticated, multi-layered architecture. Key components work in concert to manage connections, route messages, store data, and ensure reliability. Below is a simplified message flow and a breakdown of the core architectural areas.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div>
+                    <h3 class="text-2xl font-semibold section-title mb-4 text-center md:text-left">Simplified Message Flow</h3>
+                    <div class="space-y-4">
+                        <div class="flow-chart-box">Client A (Sender)</div>
+                        <div class="flow-chart-arrow">▼</div>
+                        <div class="flow-chart-box">Load Balancer</div>
+                        <div class="flow-chart-arrow">▼</div>
+                        <div class="flow-chart-box">Chat Server (WebSocket)</div>
+                        <div class="flow-chart-arrow">▼</div>
+                        <div class="flow-chart-box">Message Queue</div>
+                        <div class="flex space-x-4">
+                            <div class="flex-1 text-center">
+                                <div class="flow-chart-arrow">▼</div>
+                                <div class="flow-chart-box">Persistence Service & DB</div>
+                            </div>
+                            <div class="flex-1 text-center">
+                                <div class="flow-chart-arrow">▼</div>
+                                <div class="flow-chart-box">Fan-out Service</div>
+                                <div class="flow-chart-arrow">▼</div>
+                                <div class="flow-chart-box">Chat Server (Recipient)</div>
+                                <div class="flow-chart-arrow">▼</div>
+                                <div class="flow-chart-box">Client B (Recipient)</div>
+                            </div>
+                        </div>
+                    </div>
+                     <p class="text-sm text-gray-600 mt-4 text-center">This diagram illustrates the path a message takes from sender to recipient, highlighting key intermediary services that ensure reliability and scalability.</p>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold section-title mb-4 text-center md:text-left">Core Architectural Areas</h3>
+                    <div class="chart-container h-[350px] md:h-[400px] max-h-[450px] mx-auto">
+                        <canvas id="componentCategoriesChart"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-4 text-center">Chat architectures are typically segmented into distinct areas: client interfaces, connection/logic servers, data storage tiers, and specialized backend services. This distribution is key to modularity and scalability.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="pillars" class="card">
+            <h2 class="text-3xl font-bold section-title mb-6 text-center">Pillars of a Resilient Chat System</h2>
+            <p class="text-lg text-gray-700 mb-8 max-w-3xl mx-auto text-center">
+                Building a chat system that users can depend on requires focusing on several critical design principles. These pillars ensure the system is not only functional but also robust, secure, and performs optimally under demanding conditions.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div>
+                    <h3 class="text-2xl font-semibold section-title mb-4 text-center md:text-left">Key Design Principles: Rated Importance</h3>
+                    <div class="chart-container h-[350px] md:h-[400px] max-h-[450px] mx-auto">
+                        <canvas id="designPrinciplesChart"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-4 text-center">While all principles are vital, their emphasis can vary. Scalability and reliability often top the list, ensuring the system grows with demand and remains operational.</p>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold section-title mb-4 text-center md:text-left">Essential Technologies & Approaches</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-center p-3 bg-slate-50 rounded-md shadow-sm"><span class="text-xl mr-3 text-[#FF6B6B]">🔌</span> WebSockets for persistent, low-latency connections.</li>
+                        <li class="flex items-center p-3 bg-slate-50 rounded-md shadow-sm"><span class="text-xl mr-3 text-[#4ECDC4]">🔄</span> Message Queues (e.g., Kafka, RabbitMQ) for decoupling and buffering.</li>
+                        <li class="flex items-center p-3 bg-slate-50 rounded-md shadow-sm"><span class="text-xl mr-3 text-[#45B7D1]">💾</span> Horizontally Scalable Databases (NoSQL & SQL sharding).</li>
+                        <li class="flex items-center p-3 bg-slate-50 rounded-md shadow-sm"><span class="text-xl mr-3 text-[#FFD166]">📍</span> Presence Services (e.g., using Redis) for real-time status.</li>
+                        <li class="flex items-center p-3 bg-slate-50 rounded-md shadow-sm"><span class="text-xl mr-3 text-[#06D6A0]">🔒</span> Robust Authentication & Authorization (OAuth, JWT).</li>
+                        <li class="flex items-center p-3 bg-slate-50 rounded-md shadow-sm"><span class="text-xl mr-3 text-[#118AB2]">📡</span> Efficient Load Balancing for distributing traffic.</li>
+                    </ul>
+                    <p class="text-sm text-gray-600 mt-4 text-center">These elements are fundamental building blocks for achieving a high-performance, scalable real-time chat infrastructure.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="ecosystem" class="card">
+            <h2 class="text-3xl font-bold section-title mb-6 text-center">Technology Ecosystem for Chat</h2>
+            <p class="text-lg text-gray-700 mb-8 max-w-3xl mx-auto text-center">
+                The development of a scalable chat system leverages a diverse ecosystem of technologies. Choices in programming languages, libraries, databases, and queuing systems significantly impact performance, scalability, and maintainability. This section illustrates common technology preferences.
+            </p>
+            <div class="chart-container h-[400px] md:h-[450px] max-h-[500px] mx-auto">
+                <canvas id="techEcosystemChart"></canvas>
+            </div>
+            <p class="text-sm text-gray-600 mt-4 text-center">The chart depicts illustrative adoption or suitability shares for various technologies within key categories of a chat system's stack. Choices often depend on specific project requirements, team expertise, and desired trade-offs.</p>
+        </section>
+
+        <section id="horizon" class="card">
+            <h2 class="text-3xl font-bold section-title mb-6 text-center">The Horizon: Advancing Chat Capabilities</h2>
+            <p class="text-lg text-gray-700 mb-8 max-w-3xl mx-auto text-center">
+                The evolution of chat systems continues, driven by user expectations and technological advancements. Future enhancements aim to make chat more secure, intelligent, and feature-rich. This section explores potential advancements, considering their impact and implementation complexity.
+            </p>
+            <div class="chart-container h-[400px] md:h-[450px] max-h-[500px] mx-auto">
+                <canvas id="futureEnhancementsChart"></canvas>
+            </div>
+            <p class="text-sm text-gray-600 mt-4 text-center">The bubble chart visualizes future chat enhancements by their potential user impact and the complexity of their implementation. Balancing these factors is crucial for strategic product development.</p>
+        </section>
+
+        <section class="text-center py-12">
+            <h2 class="text-3xl font-bold section-title mb-4">Building the Future of Communication</h2>
+            <p class="text-lg text-gray-700 max-w-2xl mx-auto">
+                Designing highly scalable real-time chat systems is a complex yet rewarding endeavor. By focusing on robust architecture, key design principles, and leveraging the right technologies, we can build platforms that connect millions and power instantaneous global communication. The journey of innovation in this space is ongoing, promising even more sophisticated and integrated chat experiences in the years to come.
+            </p>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#1A535C] text-white text-center p-6 mt-12">
+        <p>&copy; 2025 Chat System Insights. All data presented is illustrative and based on the "Highly Scalable Real-time Chat System Design" principles.</p>
+    </footer>
+
+    <script>
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+
+        const processLabels = (labels) => {
+            return labels.map(label => {
+                if (typeof label === 'string' && label.length > 16) {
+                    const words = label.split(' ');
+                    const newLabel = [];
+                    let currentLine = '';
+                    words.forEach(word => {
+                        if ((currentLine + word).length > 16 && currentLine.length > 0) {
+                            newLabel.push(currentLine.trim());
+                            currentLine = word + ' ';
+                        } else {
+                            currentLine += word + ' ';
+                        }
+                    });
+                    newLabel.push(currentLine.trim());
+                    return newLabel;
+                }
+                return label;
+            });
+        };
+        
+        // Chart 1: Component Categories (Donut Chart)
+        const componentCtx = document.getElementById('componentCategoriesChart').getContext('2d');
+        new Chart(componentCtx, {
+            type: 'doughnut',
+            data: {
+                labels: processLabels(['Client Applications', 'Chat/WebSocket Servers', 'Data Persistence Tier', 'Messaging & Queuing', 'Supporting Services (Presence, Push)']),
+                datasets: [{
+                    label: 'Architectural Areas',
+                    data: [15, 25, 30, 20, 10],
+                    backgroundColor: ['#FF6B6B', '#4ECDC4', '#FFD166', '#45B7D1', '#06D6A0'],
+                    borderColor: '#F7FFF7',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#1A535C' } },
+                    tooltip: { callbacks: { title: tooltipTitleCallback }, bodyColor: '#1A535C', titleColor: '#1A535C', backgroundColor: 'rgba(247,255,247,0.9)', borderColor: '#4ECDC4', borderWidth:1 }
+                }
+            }
+        });
+
+        // Chart 2: Design Principles (Bar Chart)
+        const principlesCtx = document.getElementById('designPrinciplesChart').getContext('2d');
+        new Chart(principlesCtx, {
+            type: 'bar',
+            data: {
+                labels: processLabels(['Scalability', 'Reliability', 'Low Latency', 'Security', 'Availability', 'Extensibility']),
+                datasets: [{
+                    label: 'Rated Importance (Illustrative)',
+                    data: [95, 92, 88, 90, 85, 80],
+                    backgroundColor: ['#FF6B6B', '#4ECDC4', '#FFD166', '#45B7D1', '#06D6A0', '#118AB2'],
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: { beginAtZero: true, max: 100, grid: { color: 'rgba(26,83,92,0.1)' }, ticks: { color: '#1A535C' } },
+                    y: { grid: { display: false }, ticks: { color: '#1A535C' } }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { title: tooltipTitleCallback }, bodyColor: '#1A535C', titleColor: '#1A535C', backgroundColor: 'rgba(247,255,247,0.9)', borderColor: '#4ECDC4', borderWidth:1 }
+                }
+            }
+        });
+
+        // Chart 3: Technology Ecosystem (Stacked Bar Chart)
+        const ecosystemCtx = document.getElementById('techEcosystemChart').getContext('2d');
+        new Chart(ecosystemCtx, {
+            type: 'bar',
+            data: {
+                labels: processLabels(['WebSocket Servers', 'Message Queues', 'NoSQL Databases', 'Relational Databases']),
+                datasets: [
+                    {
+                        label: 'Option A (e.g., Node.js, Kafka, Cassandra, PostgreSQL)',
+                        data: [40, 50, 45, 30],
+                        backgroundColor: '#FF6B6B',
+                    },
+                    {
+                        label: 'Option B (e.g., Go, RabbitMQ, MongoDB, MySQL)',
+                        data: [35, 30, 30, 40],
+                        backgroundColor: '#4ECDC4',
+                    },
+                    {
+                        label: 'Option C (e.g., Elixir, Pulsar, DynamoDB, Other SQL)',
+                        data: [25, 20, 25, 30],
+                        backgroundColor: '#FFD166',
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { stacked: true, grid: { display: false }, ticks: { color: '#1A535C' } },
+                    y: { stacked: true, beginAtZero: true, max: 100, grid: { color: 'rgba(26,83,92,0.1)' }, ticks: { color: '#1A535C' } }
+                },
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#1A535C' } },
+                    tooltip: { callbacks: { title: tooltipTitleCallback }, mode: 'index', intersect: false, bodyColor: '#1A535C', titleColor: '#1A535C', backgroundColor: 'rgba(247,255,247,0.9)', borderColor: '#4ECDC4', borderWidth:1 }
+                }
+            }
+        });
+
+        // Chart 4: Future Enhancements (Bubble Chart)
+        const futureCtx = document.getElementById('futureEnhancementsChart').getContext('2d');
+        new Chart(futureCtx, {
+            type: 'bubble',
+            data: {
+                labels: processLabels(['End-to-End Encryption', 'AI-Powered Moderation', 'Advanced Media Streaming', 'Rich Presence Indicators', 'Cross-Platform Data Sync', 'Federated Chat Networks']), // These labels are for the dataset, not axes.
+                datasets: [{
+                    label: 'Future Enhancements',
+                    data: [
+                        { x: 8, y: 9, r: 25, label: 'End-to-End Encryption' }, // x: Complexity, y: Impact, r: Priority/Interest
+                        { x: 7, y: 7, r: 20, label: 'AI-Powered Moderation' },
+                        { x: 9, y: 6, r: 18, label: 'Advanced Media Streaming' },
+                        { x: 5, y: 6, r: 15, label: 'Rich Presence Indicators' },
+                        { x: 6, y: 8, r: 22, label: 'Cross-Platform Data Sync & Analytics' },
+                        { x: 10, y: 7, r: 12, label: 'Federated Chat Networks' }
+                    ],
+                    backgroundColor: ['#FF6B6B', '#4ECDC4', '#FFD166', '#45B7D1', '#06D6A0', '#118AB2'],
+                    borderColor: 'rgba(0,0,0,0.1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { 
+                        title: { display: true, text: 'Implementation Complexity (1-10)', color: '#1A535C' },
+                        min: 0, max: 10,
+                        grid: { color: 'rgba(26,83,92,0.1)' }, ticks: { color: '#1A535C' }
+                    },
+                    y: { 
+                        title: { display: true, text: 'Potential User Impact (1-10)', color: '#1A535C' },
+                        min: 0, max: 10,
+                        grid: { color: 'rgba(26,83,92,0.1)' }, ticks: { color: '#1A535C' }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                // For bubble charts, the label is often part of the data point itself
+                                return tooltipItems[0].raw.label || '';
+                            },
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += `(Complexity: ${context.raw.x}, Impact: ${context.raw.y}, Priority: ${context.raw.r})`;
+                                return label;
+                            }
+                        },
+                        bodyColor: '#1A535C', titleColor: '#1A535C', backgroundColor: 'rgba(247,255,247,0.9)', borderColor: '#4ECDC4', borderWidth:1
+                    }
+                }
+            }
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                // Update active nav item
+                document.querySelectorAll('nav a').forEach(item => item.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // Intersection Observer for active nav state on scroll
+        const sections = document.querySelectorAll('main section[id]');
+        const navLi = document.querySelectorAll('nav ul li a');
+
+        const observerOptions = {
+            root: null, // relative to document viewport
+            rootMargin: '0px',
+            threshold: 0.5 // 50% of section is visible
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLi.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').substring(1) === entry.target.id) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+
+    </script>
+</body>
+</html>

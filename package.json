@@ -1,0 +1,15 @@
+{
+  "name": "chat-application",
+  "version": "1.0.0",
+  "description": "- Real-Time messaging system  - Challenge: Managing messages queues, low-latency communication & maintaining uptime with failover mechanisms - Concepts: Websockets, long polling and fault tolerence - Great to: Handle reliable and concurrent real-time systems",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm install --prefix frontend && npm run build --prefix frontend && npm install --prefix backend",
+    "start": "npm run start --prefix backend"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
