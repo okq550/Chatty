@@ -7,7 +7,8 @@ import dotenv from "dotenv"
 import cookieParser from "cookie-parser"
 import cors from "cors"
 import { app, server } from "./lib/socket.js"
-import path from "path"
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 import connectDB from "./lib/db.js"
 import authRoutes from "./routes/auth.routes.js"
@@ -37,6 +38,9 @@ app.get("/ping", (req, res) => {
 
 // Serve the frontend as static
 if (process.env.NODE_ENV === "production") {
+  const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+  const __dirname = path.dirname(__filename); // get the name of the directory
+
   app.use(express.static(path.join(__dirname, "../frontend/dist")))
 
   app.get("*", (req, res) => {
