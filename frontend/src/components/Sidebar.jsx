@@ -27,7 +27,16 @@ const Sidebar = () => {
           <Users className="size-6" />
           <span className="font-meduim hidden lg:block">Contacts</span>
         </div>
-        {/*TODO: Online filter toggle */}
+        {/* Online filter toggle - icon only on small screens, full on large */}
+        <div className="mt-3 flex items-center gap-2 lg:hidden justify-center">
+          <button
+            onClick={() => setShowOnlineUsers(!showOnlineUsers)}
+            className={`btn btn-sm btn-circle ${showOnlineUsers ? 'btn-primary' : 'btn-ghost'}`}
+            title="Show online only"
+          >
+            <span className="size-2 rounded-full bg-green-500 inline-block" />
+          </button>
+        </div>
         <div className="mt-3 hidden lg:flex items-center gap-2">
           <label className="cursor-pointer flex items-center gap-2">
             <input
